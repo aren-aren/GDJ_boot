@@ -1,15 +1,15 @@
 package com.winter.app.board.notice;
 
+import com.winter.app.util.Pager;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@Slf4j
 class NoticeTest {
     @Autowired
     NoticeDAO noticeDAO;
@@ -31,17 +31,16 @@ class NoticeTest {
     }
     @Test
     public void selectTest() throws Exception {
-        Map<String, Object> map = new HashMap<>();
+        Pager pager = new Pager();
+        pager.setPage(2L);
+        pager.makeIndex();
+        Long totalCount = noticeDAO.getTotalCount(pager);
+        pager.makeBlock(totalCount);
 
-        int start = 0;
-        int step = 200;
-        String keyword = "9";
+        log.info("{}",pager);
 
-        map.put("start", start);
-        map.put("step", step);
-        map.put("keyword", keyword);
+        var l = noticeDAO.getList(pager);
 
-        var l = noticeDAO.getList(map);
-        assertEquals(l.size(), step);
+        assertEquals(l.size(), pager.getPerPage());
     }
 }
