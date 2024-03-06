@@ -29,65 +29,21 @@
             <div class="container-fluid">
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">${board}</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
                     <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                             class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                 </div>
 
                 <!-- Main Contents -->
                 <main class="row">
-                    <table class="table table-primary table-hover table-striped">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Title</th>
-                                <th>Writer</th>
-                                <th>Date</th>
-                                <th>Views</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${list}" var="vo">
-                                <tr>
-                                    <td>${vo.boardNum}</td>
-                                    <td><a href="detail?boardNum=${vo.boardNum}">${vo.boardTitle}</a></td>
-                                    <td>${vo.writer}</td>
-                                    <td>${vo.boardDate}</td>
-                                    <td>${vo.boardViews}</td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                </main>
-
-                <div class="align-content-center">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-
-                            <li class="page-item ${pager.start ? "disabled" : ""}">
-                                <a class="page-link" href="?page=${pager.startNum - 1}&kind=${pager.kind}&search=${pager.search}" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-
-                            <c:forEach begin="${pager.startNum}" end="${pager.lastNum}" var="i">
-                            <li class="page-item">
-                                <a class="page-link" href="?page=${i}&kind=${pager.kind}&search=${pager.search}">${i}</a>
-                            </li>
-                            </c:forEach>
-
-                            <li class="page-item ${pager.last ? "disabled" : ""}">
-                                <a class="page-link" href="?page=${pager.lastNum + 1}&kind=${pager.kind}&search=${pager.search}" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-
-                        </ul>
-                    </nav>
+                    <h3>${vo.boardTitle}</h3>
+                    <h3>${vo.boardContents}</h3>
                     <div>
-                        <a class="btn btn-primary" href="add">글쓰기</a>
+                        <c:forEach items="${vo.fileList}" var="f">
+                            <a href="/files/${board.toLowerCase()}/${f.fileName}">${f.oriName}</a>
+                        </c:forEach>
                     </div>
-                </div>
+                </main>
 
             </div>
             <!-- /.container-fluid -->

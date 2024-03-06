@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.winter.app.board.notice.NoticeDAO">
+<mapper namespace="com.winter.app.board.qna.QnaDAO">
     <sql id="search">
         <where>
             <choose>
@@ -15,9 +15,9 @@
         </where>
     </sql>
 
-    <select id="getList" parameterType="Pager" resultType="NoticeVO">
+    <select id="getList" parameterType="Pager" resultType="QnaVO">
         SELECT *
-        FROM NOTICE
+        FROM QNA
         <include refid="search"/>
         ORDER BY BOARDNUM DESC
         LIMIT #{startIndex},#{perPage}
@@ -25,12 +25,12 @@
     
     <select id="getDetail" parameterType="BoardVO" resultMap="getDetailResult">
         SELECT * 
-        FROM NOTICE n
-            LEFT JOIN NOTICEFILES nf ON n.BOARDNUM=nf.BOARDNUM
+        FROM QNA n
+            LEFT JOIN QNAFILES nf ON n.BOARDNUM=nf.BOARDNUM
         WHERE n.BOARDNUM=#{boardNum}
     </select>
     
-    <resultMap id="getDetailResult" type="NoticeVO" autoMapping="true">
+    <resultMap id="getDetailResult" type="QnaVO" autoMapping="true">
         <id column="BOARDNUM" property="boardNum"/>
         <collection property="fileList" javaType="List" ofType="FileVO" autoMapping="true">
         </collection>
@@ -38,17 +38,17 @@
 
     <select id="getTotalCount" parameterType="Pager" resultType="Long">
         SELECT COUNT(BOARDNUM)
-        FROM NOTICE
+        FROM QNA
         <include refid="search"/>
     </select>
 
     <insert id="add" parameterType="BoardVO" useGeneratedKeys="true" keyProperty="boardNum">
-        INSERT INTO NOTICE(BOARDNUM, WRITER, BOARDTITLE, BOARDCONTENTS, BOARDVIEWS, BOARDDATE)
+        INSERT INTO QNA(BOARDNUM, WRITER, BOARDTITLE, BOARDCONTENTS, BOARDVIEWS, BOARDDATE)
         VALUES(NULL, #{writer}, #{boardTitle}, #{boardContents}, 0, now())
     </insert>
 
     <insert id="addFile" parameterType="List">
-        INSERT INTO NOTICEFILES
+        INSERT INTO QNAFILES
         <foreach collection="fileVOList" item="fileVO" separator="," open="VALUES">
             (NULL, #{fileVO.boardNum}, #{fileVO.fileName}, #{fileVO.oriName})
         </foreach>

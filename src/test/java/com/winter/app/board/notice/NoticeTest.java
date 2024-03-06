@@ -13,22 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class NoticeTest {
     @Autowired
     NoticeDAO noticeDAO;
-
-    @Test
-    public void add() throws Exception {
-        int result = 0;
-
-        for (int i = 0; i < 100; i++) {
-            NoticeVO noticeVO = new NoticeVO();
-            noticeVO.setWriter("tester" + i);
-            noticeVO.setBoardTitle("testTitle" + i);
-            noticeVO.setBoardContents("testContents" + i);
-
-            result += noticeDAO.add(noticeVO);
-        }
-
-        assertEquals(result,1);
-    }
     @Test
     public void selectTest() throws Exception {
         Pager pager = new Pager();
@@ -42,5 +26,20 @@ class NoticeTest {
         var l = noticeDAO.getList(pager);
 
         assertEquals(l.size(), pager.getPerPage());
+    }
+
+    @Test
+    public void getDetail() throws Exception {
+        NoticeVO noticeVO = new NoticeVO();
+        noticeVO.setBoardNum(206L);
+
+        NoticeVO notice = (NoticeVO) noticeDAO.getDetail(noticeVO);
+
+        log.info("notice = {}", notice);
+        log.info("notice = {}", notice);
+        log.info("notice = {}", notice);
+        log.info("notice = {}", notice);
+        log.info("notice = {}", notice);
+        log.info("notice = {}", notice);
     }
 }

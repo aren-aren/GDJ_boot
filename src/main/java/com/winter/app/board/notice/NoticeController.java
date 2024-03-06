@@ -1,6 +1,7 @@
 package com.winter.app.board.notice;
 
 import com.winter.app.board.BoardService;
+import com.winter.app.board.BoardVO;
 import com.winter.app.util.Pager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/notice/*")
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class NoticeController {
     @Autowired
     private BoardService noticeService;
-
     @Value("${board.notice.name}")
     private String name;
 
@@ -35,14 +36,23 @@ public class NoticeController {
         return "board/list";
     }
 
+    @GetMapping("detail")
+    public String getDetail(BoardVO boardVO, Model model) throws Exception {
+        NoticeVO noticeVO = (NoticeVO) noticeService.getDetail(boardVO);
+
+        model.addAttribute("vo", noticeVO);
+
+        return "board/detail";
+    }
+
     @GetMapping("add")
     public String add() {
         return "board/add";
     }
 
     @PostMapping("add")
-    public String add(NoticeVO noticeVO) throws Exception{
-        int result = noticeService.add(noticeVO);
-        return "redirect:board/list";
+    public String add(NoticeVO noticeVO, MultipartFile[] attach) throws Exception{
+        int result = noticeService.add(noticeVO, attach);
+        return "redirect:/notice/list";
     }
 }

@@ -3,9 +3,11 @@ package com.winter.app.board;
 import lombok.*;
 
 import java.sql.Date;
+import java.util.List;
 
 @Getter
 @Setter
+@ToString
 public class BoardVO {
     private Long boardNum;
     private String writer;
@@ -13,4 +15,5 @@ public class BoardVO {
     private String boardContents;
     private Date boardDate;
     private Long boardViews;
+    private List<FileVO> fileList;
 }

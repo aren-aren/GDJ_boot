@@ -6,9 +6,13 @@
 <configuration>
     <typeAliases>
         <typeAlias type="java.lang.Long" alias="Long"/>
+        <typeAlias type="java.util.List" alias="List"/>
 
         <typeAlias type="com.winter.app.board.notice.NoticeVO" alias="NoticeVO"/>
+        <typeAlias type="com.winter.app.board.qna.QnaVO" alias="QnaVO"/>
         <typeAlias type="com.winter.app.board.BoardVO" alias="BoardVO"/>
+        <typeAlias type="com.winter.app.board.FileVO" alias="FileVO"/>
+
         <typeAlias type="com.winter.app.util.Pager" alias="Pager"/>
     </typeAliases>
 </configuration>

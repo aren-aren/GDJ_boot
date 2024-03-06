@@ -35,8 +35,8 @@
                 </div>
 
                 <!-- Main Contents -->
-                <main class="row">
-                    <form method="post" class="ml-3 col-9">
+                <main class="row justify-content-center">
+                    <form method="post" class="col-9" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="title" class="form-label">제목</label>
                             <input type="text" class="form-control" id="title" name="boardTitle" placeholder="제목을 입력하세요.">
@@ -49,6 +49,13 @@
                             <label for="contents" class="form-label">내용</label>
                             <textarea class="form-control" id="contents" name="boardContents" rows="3" placeholder="내용을 입력하세요"></textarea>
                         </div>
+
+                        <div class="mb-3">
+                            <input class="d-block form-control-file" type="file" name="attach">
+                            <input class="d-block form-control-file" type="file" name="attach">
+                            <input class="d-block form-control-file" type="file" name="attach">
+                        </div>
+
                         <div class="mb-3">
                             <button class="btn btn-primary">작성하기</button>
                         </div>
