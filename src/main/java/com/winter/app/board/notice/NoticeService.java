@@ -18,6 +18,7 @@ import java.util.List;
 
 @Service
 @Slf4j
+@Transactional(rollbackFor = Exception.class)
 public class NoticeService implements BoardService {
 
     @Autowired
@@ -37,7 +38,6 @@ public class NoticeService implements BoardService {
     }
 
     @Override
-    @Transactional
     public int add(BoardVO boardVO, MultipartFile[] attach) throws Exception {
         int result = noticeDAO.add(boardVO);
 
