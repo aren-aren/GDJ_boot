@@ -13,4 +13,6 @@ public interface BoardDAO {
     int addFile(List<FileVO> fileVOList) throws Exception;
 
     BoardVO getDetail(BoardVO boardVO);
+
+    FileVO getFileDetail(FileVO fileVO) throws Exception;
 }

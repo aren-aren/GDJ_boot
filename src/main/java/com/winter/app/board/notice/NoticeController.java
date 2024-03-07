@@ -2,6 +2,7 @@ package com.winter.app.board.notice;
 
 import com.winter.app.board.BoardService;
 import com.winter.app.board.BoardVO;
+import com.winter.app.board.FileVO;
 import com.winter.app.util.Pager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class NoticeController {
     public String board(){
         return this.name;
     }
+
+
     @GetMapping("list")
     public String getList(Pager pager, Model model) throws Exception {
         var list = noticeService.getList(pager);
@@ -54,5 +57,13 @@ public class NoticeController {
     public String add(NoticeVO noticeVO, MultipartFile[] attach) throws Exception{
         int result = noticeService.add(noticeVO, attach);
         return "redirect:/notice/list";
+    }
+
+    @GetMapping("fileDown")
+    public String fileDown(FileVO fileVO, Model model) throws Exception {
+        fileVO = noticeService.getFileDetail(fileVO);
+
+        model.addAttribute("fileVO", fileVO);
+        return "fileDownView";
     }
 }

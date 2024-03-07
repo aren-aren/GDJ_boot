@@ -3,6 +3,7 @@ package com.winter.app.board.qna;
 import com.winter.app.board.BoardDAO;
 import com.winter.app.board.BoardService;
 import com.winter.app.board.BoardVO;
+import com.winter.app.board.FileVO;
 import com.winter.app.util.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,11 @@ public class QnaService implements BoardService {
 
     @Override
     public BoardVO getDetail(BoardVO boardVO) {
+        return null;
+    }
+
+    @Override
+    public FileVO getFileDetail(FileVO fileVO) throws Exception {
         return null;
     }
 }

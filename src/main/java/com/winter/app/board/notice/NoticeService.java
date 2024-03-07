@@ -67,4 +67,9 @@ public class NoticeService implements BoardService {
     public BoardVO getDetail(BoardVO boardVO) {
         return noticeDAO.getDetail(boardVO);
     }
+
+    @Override
+    public FileVO getFileDetail(FileVO fileVO) throws Exception {
+        return noticeDAO.getFileDetail(fileVO);
+    }
 }

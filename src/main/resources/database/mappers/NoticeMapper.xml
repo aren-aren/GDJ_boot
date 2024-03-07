@@ -53,4 +53,8 @@
             (NULL, #{fileVO.boardNum}, #{fileVO.fileName}, #{fileVO.oriName})
         </foreach>
     </insert>
+
+    <select id="getFileDetail" parameterType="FileVO" resultType="FileVO">
+        SELECT * FROM NOTICEFILES WHERE FILENUM = #{fileNum}
+    </select>
 </mapper>
