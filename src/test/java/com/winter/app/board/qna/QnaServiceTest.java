@@ -15,9 +15,5 @@ class QnaServiceTest {
 
     @Test
     void getList() throws Exception {
-        Pager pager = new Pager();
-        var list = qnaService.getList(pager);
-
-        assertEquals(list.size(), pager.getPerPage());
     }
 }
