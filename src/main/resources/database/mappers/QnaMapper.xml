@@ -22,14 +22,14 @@
         ORDER BY BOARDNUM DESC
         LIMIT #{startIndex},#{perPage}
     </select>
-    
+
     <select id="getDetail" parameterType="BoardVO" resultMap="getDetailResult">
-        SELECT * 
+        SELECT *
         FROM QNA n
             LEFT JOIN QNAFILES nf ON n.BOARDNUM=nf.BOARDNUM
         WHERE n.BOARDNUM=#{boardNum}
     </select>
-    
+
     <resultMap id="getDetailResult" type="QnaVO" autoMapping="true">
         <id column="BOARDNUM" property="boardNum"/>
         <collection property="fileList" javaType="List" ofType="FileVO" autoMapping="true">

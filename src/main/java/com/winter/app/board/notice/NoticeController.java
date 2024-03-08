@@ -41,7 +41,7 @@ public class NoticeController {
 
     @GetMapping("detail")
     public String getDetail(BoardVO boardVO, Model model) throws Exception {
-        NoticeVO noticeVO = (NoticeVO) noticeService.getDetail(boardVO);
+        BoardVO noticeVO = noticeService.getDetail(boardVO);
 
         model.addAttribute("vo", noticeVO);
 
@@ -54,7 +54,7 @@ public class NoticeController {
     }
 
     @PostMapping("add")
-    public String add(NoticeVO noticeVO, MultipartFile[] attach) throws Exception{
+    public String add(BoardVO noticeVO, MultipartFile[] attach) throws Exception{
         int result = noticeService.add(noticeVO, attach);
         return "redirect:/notice/list";
     }

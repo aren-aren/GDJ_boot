@@ -1,7 +1,9 @@
 package com.winter.app;
 
+import com.winter.app.member.MemberVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
@@ -19,9 +21,9 @@ import java.util.List;
 @Slf4j
 public class TestController {
 
-
     @GetMapping("/")
-    public String test() throws InterruptedException {
+    public String test(Model model) throws InterruptedException {
+        //model.addAttribute("m", new MemberVO("유혁스쿨"));
 
         return "index";
     }

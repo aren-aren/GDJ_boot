@@ -21,5 +21,8 @@ public class FileMapping implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler(urlPath)
                 .addResourceLocations(filePath);
+
+        registry.addResourceHandler("/img/**")
+                .addResourceLocations("classpath:/static/img/");
     }
 }

@@ -1,6 +1,5 @@
 package com.winter.app.board;
 
-import com.winter.app.board.notice.NoticeVO;
 import com.winter.app.util.Pager;
 
 import java.util.List;
