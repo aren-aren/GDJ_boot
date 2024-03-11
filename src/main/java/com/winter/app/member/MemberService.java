@@ -37,4 +37,12 @@ public class MemberService {
     public int add(MemberVO memberVO) {
         return memberDAO.add(memberVO);
     }
+
+    //삭제할 메서드
+    public MemberVO detail() {
+        MemberVO memberVO = new MemberVO();
+        memberVO.setUsername("a111");
+
+        return memberDAO.getDetail(memberVO);
+    }
 }
