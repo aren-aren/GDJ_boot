@@ -2,6 +2,7 @@ package com.winter.app.member;
 
 import com.winter.app.member.groups.MemberJoinGroup;
 import com.winter.app.member.groups.MemberUpdateGroup;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,12 @@ public class MemberController {
     @ModelAttribute("title")
     public String title(){
         return "Member";
+    }
+
+    @GetMapping("login")
+    public String login(@ModelAttribute MemberVO memberVO) {
+
+        return "member/login";
     }
 
     @GetMapping("join")
@@ -51,7 +58,7 @@ public class MemberController {
 
     @GetMapping("update")
     public void update(Model model) throws Exception{
-        MemberVO memberVO = memberService.detail();
+        MemberVO memberVO = (MemberVO) memberService.loadUserByUsername("a111");
 
         model.addAttribute("memberVO", memberVO);
     }

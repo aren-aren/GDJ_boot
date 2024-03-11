@@ -1,11 +1,16 @@
 package com.winter.app.member;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 @Service
-public class MemberService {
+@Slf4j
+public class MemberService implements UserDetailsService {
     @Autowired
     MemberDAO memberDAO;
 
@@ -38,11 +43,22 @@ public class MemberService {
         return memberDAO.add(memberVO);
     }
 
-    //삭제할 메서드
-    public MemberVO detail() {
-        MemberVO memberVO = new MemberVO();
-        memberVO.setUsername("a111");
 
-        return memberDAO.getDetail(memberVO);
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        MemberVO memberVO = new MemberVO();
+        memberVO.setUsername(username);
+
+        log.info("---------------로그인 진행 --------------");
+        log.info("username = {}", username);
+
+        try {
+            memberVO = memberDAO.getDetail(memberVO);
+            log.info("username = {}", memberVO);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return memberVO;
     }
 }
