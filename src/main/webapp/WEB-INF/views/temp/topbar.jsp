@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!-- Topbar -->
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -48,13 +49,27 @@
             </div>
         </li>
 
+        <sec:authorize access="!isAuthenticated()">
+        <!-- 로그인 전 보이는 구간 시작 -->
+        <li class="nav-item mx-1 my-auto">
+            <a class="btn btn-primary" href="/member/login"><i class="fas fa-sign-in-alt fa-sm"></i> 로그인</a>
+        </li>
+        <li class="nav-item mx-1 my-auto">
+            <a class="btn btn-outline-primary" href="/member/join"><i class="far fa-user fa-sm"></i> 회원 가입</a>
+        </li>
+        <!-- 로그인 전 보이는 구간 끝 -->
+        </sec:authorize>
+
+
+        <sec:authorize access="isAuthenticated()">
+        <!-- 로그인 성공 시 보이는 구간 시작 -->
         <!-- Nav Item - Alerts -->
         <li class="nav-item dropdown no-arrow mx-1">
             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
                 <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter">3+</span>
+                <span class="badge badge-success badge-counter">0</span>
             </a>
             <!-- Dropdown - Alerts -->
             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -105,7 +120,7 @@
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-envelope fa-fw"></i>
                 <!-- Counter - Messages -->
-                <span class="badge badge-danger badge-counter">7</span>
+                <span class="badge badge-success badge-counter">0</span>
             </a>
             <!-- Dropdown - Messages -->
             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -197,6 +212,8 @@
                 </a>
             </div>
         </li>
+        <!-- 로그인 성공 시 보이는 구간 끝 -->
+        </sec:authorize>
 
     </ul>
 
