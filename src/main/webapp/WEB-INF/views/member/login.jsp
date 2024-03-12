@@ -67,6 +67,10 @@
                                                             <form:errors path="password"/>
                                                         </div>
 
+                                                        <div class="text-danger">
+                                                            ${param.message}
+                                                        </div>
+
                                                         <button class="btn btn-primary btn-user btn-block">Login</button>
 
                                                         <hr>

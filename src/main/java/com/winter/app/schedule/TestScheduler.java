@@ -40,7 +40,7 @@ public class TestScheduler {
         n-m : n부터 m까지 1단위로
         n,m : n과 m일 때
      */
-    @Scheduled(cron = "* */30 * * * *")
+    @Scheduled(cron = "0 */30 * * * *")
     public void useCron(){
         System.out.println("30분마다 알람!!!");
     }

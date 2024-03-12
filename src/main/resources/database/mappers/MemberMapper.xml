@@ -13,6 +13,10 @@
             , NAME
             , ROLENUM
             , ROLENAME
+            , ENABLED
+            , ACCOUNTNONEXPIRED
+            , ACCOUNTNONLOCKED
+            , CREDENTIALSNONEXPIRED
         FROM MEMBER
             INNER JOIN MEMBERROLE USING(USERNAME)
             INNER JOIN ROLE USING(ROLENUM)
@@ -22,8 +26,6 @@
     <resultMap id="memberDetailResult" type="MemberVO" autoMapping="true">
         <id column="USERNAME" property="username"/>
         <collection property="roleVOs" javaType="List" ofType="RoleVO" autoMapping="true">
-            <result column="ROLENUM" property="roleNum"/>
-            <result column="ROLENAME" property="roleName"/>
         </collection>
     </resultMap>
 

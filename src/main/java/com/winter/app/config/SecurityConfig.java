@@ -1,5 +1,6 @@
 package com.winter.app.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -33,6 +34,11 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Autowired
+    private SecurityLoginSuccessHandler successHandler;
+    @Autowired
+    private SecurityLoginFailHandler failHandler;
+
     @Bean
     WebSecurityCustomizer webSecurityCustomizer() {
         return web -> web
@@ -60,8 +66,10 @@ public class SecurityConfig {
                 )
                 //로그인 관련된 설정
                 .formLogin(login -> login
-                        .loginPage("/member/login")
-                        .defaultSuccessUrl("/")
+                        .loginPage("/member/login") // login page 지정
+//                        .defaultSuccessUrl("/")       // 로그인 성공시 redirect할 url - handler 와 같이 사용시 나중에 나오는게 무시됨(?)
+                        .successHandler(successHandler) // 로그인 성공시 처리할 일
+                        .failureHandler(failHandler)    // 로그인 실패시 처리할 일
 //                        .usernameParameter("id")    // parameter 이름을 username이 아니라 id를 사용하려 할 때
 //                        .passwordParameter("pw")    // parameter 이름을 password가 아니라 pw를 사용하려 할 때
                         .permitAll()

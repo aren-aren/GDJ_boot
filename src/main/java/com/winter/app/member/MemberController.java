@@ -5,6 +5,7 @@ import com.winter.app.member.groups.MemberUpdateGroup;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
@@ -45,8 +46,18 @@ public class MemberController {
 
     @GetMapping("login")
     public String login(@ModelAttribute MemberVO memberVO) {
+        SecurityContext context = SecurityContextHolder.getContext();
+        if(context == null){
+            return "member/login";
+        }
 
-        return "member/login";
+        String user = context.getAuthentication().getPrincipal().toString();
+
+        if(user.equals("anonymousUser")){
+            return "member/login";
+        }
+
+        return "redirect:/";
     }
 
     @GetMapping("join")
