@@ -7,9 +7,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Data
 public class MemberVO implements UserDetails {
@@ -31,9 +34,14 @@ public class MemberVO implements UserDetails {
 
     private String name;
 
+    private List<RoleVO> roleVOs;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return roleVOs.stream()
+                .map(RoleVO::getRoleName)
+                .map(SimpleGrantedAuthority::new)
+                .toList();
     }
 
     @Override

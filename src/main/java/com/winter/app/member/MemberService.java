@@ -5,14 +5,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
 @Service
 @Slf4j
+@Transactional(rollbackFor = Exception.class)
 public class MemberService implements UserDetailsService {
     @Autowired
     MemberDAO memberDAO;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     //add 검증 메서드
     //비번 일치, id 중복 여부
@@ -40,7 +45,14 @@ public class MemberService implements UserDetailsService {
     }
 
     public int add(MemberVO memberVO) {
-        return memberDAO.add(memberVO);
+        //비밀번호 암호화
+        memberVO.setPassword(passwordEncoder.encode(memberVO.getPassword()));
+        int result = memberDAO.add(memberVO);
+
+        //회원의 ROLE 정보 저장
+        result += 10*memberDAO.addMemberRole(memberVO);
+
+        return result;
     }
 
 

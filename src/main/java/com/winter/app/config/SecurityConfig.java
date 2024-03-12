@@ -14,13 +14,17 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
     Spring security 설정 방법
 
     1. Security Dependency 추가
+
     2. 사용자가 정보가 있는 UserDetails 생성
-        (UserDetails를 구현한 VO 만들기)
+        - UserDetails를 구현한 VO 만들기
+
     3. 로그인 처리 UserDetailService 생성
-        (UserDetailService를 구현한 Service 만들기)
+        - UserDetailService를 구현한 Service 만들기
+
     4. SecurityConfig
         - WebSecurityCustomizer, SecurityFilterChain, PasswordEncoder타입의 인스턴스를 Bean으로 등록
-    5. JSP에서
+
+    5. JSP에서 Security 사용
         - sec태그 사용을 위해 API추가, JSP에서 선언 후 사용
  */
 
@@ -50,6 +54,7 @@ public class SecurityConfig {
                         .requestMatchers("/member/join").permitAll()
                         .requestMatchers("/notice/add").hasRole("ADMIN")
                         .requestMatchers("/notice/update").hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers("/member/page").authenticated()
                         .requestMatchers("/notice/list").authenticated()
                         .anyRequest().permitAll()
                 )

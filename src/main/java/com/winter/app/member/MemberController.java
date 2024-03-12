@@ -3,9 +3,11 @@ package com.winter.app.member;
 import com.winter.app.member.groups.MemberJoinGroup;
 import com.winter.app.member.groups.MemberUpdateGroup;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +27,20 @@ public class MemberController {
     @ModelAttribute("title")
     public String title(){
         return "Member";
+    }
+
+    @GetMapping("page")
+    public void page(HttpSession session) throws Exception{
+        session.getAttributeNames().asIterator().forEachRemaining(name -> log.info("Attributenames = {}" , name));
+        var s = (SecurityContextImpl) session.getAttribute("SPRING_SECURITY_CONTEXT");
+        var name = s.getAuthentication().getName();
+        var memberVO = (MemberVO) s.getAuthentication().getPrincipal();
+
+        log.info("name = {}" , name);
+        log.info("memberVO = {}", memberVO);
+
+        SecurityContext context = SecurityContextHolder.getContext();
+        context.getAuthentication();
     }
 
     @GetMapping("login")

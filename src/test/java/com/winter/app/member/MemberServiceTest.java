@@ -13,17 +13,5 @@ class MemberServiceTest {
     @Autowired
     MemberDAO dao;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
 
-    @Test
-    void memberPasswordUpdate(){
-        MemberVO memberVO = new MemberVO();
-        memberVO.setUsername("qqwe");
-        memberVO.setPassword(passwordEncoder.encode("123456"));
-
-        int result = dao.update(memberVO);
-
-        assertEquals(result, 1);
-    }
 }

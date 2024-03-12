@@ -48,12 +48,12 @@ public class NoticeController {
         return "board/detail";
     }
 
-//    @GetMapping("add")
+    @GetMapping("add")
     public String add() {
         return "board/add";
     }
 
-    @GetMapping("add")
+    @PostMapping("add")
     public String add(BoardVO noticeVO, MultipartFile[] attach) throws Exception{
         int result = noticeService.add(noticeVO, attach);
         return "redirect:/notice/list";

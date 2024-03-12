@@ -9,6 +9,5 @@ public interface MemberDAO {
 
     int add(MemberVO memberVO);
 
-    @Update("UPDATE MEMBER SET PASSWORD=#{password} WHERE USERNAME=#{username}")
-    int update(MemberVO memberVO);
+    int addMemberRole(MemberVO memberVO);
 }

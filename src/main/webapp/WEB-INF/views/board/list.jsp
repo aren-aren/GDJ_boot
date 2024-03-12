@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -84,9 +85,9 @@
 
                         </ul>
                     </nav>
-                    <div>
+                    <sec:authorize access="hasAnyRole('MANAGER', 'ADMIN')">
                         <a class="btn btn-primary" href="add">글쓰기</a>
-                    </div>
+                    </sec:authorize>
                 </div>
 
             </div>
