@@ -57,7 +57,7 @@
                                                     <form:form cssClass="user" modelAttribute="memberVO">
 
                                                         <div class="form-group">
-                                                            <form:input path="username"  cssClass="form-control form-control-user"
+                                                            <form:input path="username" value="${cookie.rememberId.value}" cssClass="form-control form-control-user"
                                                                         id="username"/>
                                                             <form:errors path="username"/>
                                                         </div>
@@ -65,6 +65,17 @@
                                                             <form:password path="password" cssClass="form-control form-control-user"
                                                                            id="password"/>
                                                             <form:errors path="password"/>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <div class="form-check form-switch">
+                                                                <input class="form-check-input" name="rememberMe" type="checkbox" role="switch" id="remember-me">
+                                                                <label class="form-check-label" for="remember-me">remember-me</label>
+                                                            </div>
+                                                            <div class="form-check form-switch">
+                                                                <input class="form-check-input" name="rememberId" type="checkbox" role="switch" id="remember-id">
+                                                                <label class="form-check-label" for="remember-id">아이디 기억하기</label>
+                                                            </div>
                                                         </div>
 
                                                         <div class="text-danger">

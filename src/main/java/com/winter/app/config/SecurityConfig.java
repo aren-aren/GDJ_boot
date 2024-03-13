@@ -1,5 +1,6 @@
 package com.winter.app.config;
 
+import com.winter.app.member.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,6 +39,8 @@ public class SecurityConfig {
     private SecurityLoginSuccessHandler successHandler;
     @Autowired
     private SecurityLoginFailHandler failHandler;
+    @Autowired
+    private MemberService memberService;
 
     @Bean
     WebSecurityCustomizer webSecurityCustomizer() {
@@ -47,8 +50,7 @@ public class SecurityConfig {
                 .requestMatchers("/css/**")
                 .requestMatchers("/js/**")
                 .requestMatchers("/vender/**")
-                .requestMatchers("/favicon/**")
-                ;
+                .requestMatchers("/favicon/**");
     }
 
     @Bean
@@ -79,15 +81,25 @@ public class SecurityConfig {
                         .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)// 로그아웃시 session만료
-                        .permitAll());
+                        .permitAll()
+                )
+                //rememberMe 관련 설정
+                .rememberMe(remember -> remember
+                        .rememberMeParameter("rememberMe")  // rememberMe parameter name
+                        .tokenValiditySeconds(3600)          // 유효기간 초단위
+                        .key("rememberMe!")                 // 키 - 암호화에 필요?
+                        .userDetailsService(memberService)  // 로그인 할 때 쓰는 UserDetailService
+                        .authenticationSuccessHandler(successHandler)   // 로그인 성공 시 Handler
+                        .useSecureCookie(false)             // ?
+                )
+                //동시 접속
+                .sessionManagement(sessionManagement -> sessionManagement
+                        .maximumSessions(1)
+                        .maxSessionsPreventsLogin(false)
+                        .expiredUrl("/expired")
+                );
 
 
         return security.build();
-    }
-
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        //password를 암호화 해주는 객체
-        return new BCryptPasswordEncoder();
     }
 }
