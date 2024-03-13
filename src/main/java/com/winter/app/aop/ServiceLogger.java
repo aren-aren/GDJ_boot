@@ -22,7 +22,7 @@ public class ServiceLogger {
 
         Object obj = pjp.proceed();
 
-        log.info("리턴값 : {}" , obj.toString());
+        log.info("리턴값 : {}" , obj);
         log.info("========== Service 종료 ==============");
 
         return obj;

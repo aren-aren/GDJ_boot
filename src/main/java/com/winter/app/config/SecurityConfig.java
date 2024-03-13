@@ -97,6 +97,10 @@ public class SecurityConfig {
                         .maximumSessions(1)
                         .maxSessionsPreventsLogin(false)
                         .expiredUrl("/expired")
+                )
+                // 소셜 로그인 설정
+                .oauth2Login(oauth -> oauth
+                        .userInfoEndpoint(userEndpoint -> userEndpoint.userService(memberService))
                 );
 
 
