@@ -118,6 +118,7 @@ public class MemberService extends DefaultOAuth2UserService implements UserDetai
         if(c.getClientName().equalsIgnoreCase("kakao")){
             auth2User = this.kakao(auth2User);
             ((MemberVO) auth2User).setAccessToken(userRequest.getAccessToken().getTokenValue());
+            ((MemberVO) auth2User).setSocial(c.getClientName());
         }
 
         log.info("user = {}", auth2User);

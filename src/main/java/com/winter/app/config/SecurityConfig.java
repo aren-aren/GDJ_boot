@@ -7,8 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -36,11 +34,13 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
 
     @Autowired
-    private SecurityLoginSuccessHandler successHandler;
+    private SecurityLoginSuccessHandler loginSuccessHandler;
     @Autowired
-    private SecurityLoginFailHandler failHandler;
+    private SecurityLoginFailHandler loginFailHandler;
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private SecurityLogoutSuccessHandler logoutSuccessHandler;
 
     @Bean
     WebSecurityCustomizer webSecurityCustomizer() {
@@ -70,8 +70,8 @@ public class SecurityConfig {
                 .formLogin(login -> login
                         .loginPage("/member/login") // login page 지정
 //                        .defaultSuccessUrl("/")       // 로그인 성공시 redirect할 url - handler 와 같이 사용시 나중에 나오는게 무시됨(?)
-                        .successHandler(successHandler) // 로그인 성공시 처리할 일
-                        .failureHandler(failHandler)    // 로그인 실패시 처리할 일
+                        .successHandler(loginSuccessHandler) // 로그인 성공시 처리할 일
+                        .failureHandler(loginFailHandler)    // 로그인 실패시 처리할 일
 //                        .usernameParameter("id")    // parameter 이름을 username이 아니라 id를 사용하려 할 때
 //                        .passwordParameter("pw")    // parameter 이름을 password가 아니라 pw를 사용하려 할 때
                         .permitAll()
@@ -79,7 +79,8 @@ public class SecurityConfig {
                 //로그아웃 관련 설정
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
-                        .logoutSuccessUrl("/")
+//                        .logoutSuccessUrl("/")
+                        .logoutSuccessHandler(logoutSuccessHandler)
                         .invalidateHttpSession(true)// 로그아웃시 session만료
                         .permitAll()
                 )
@@ -89,7 +90,7 @@ public class SecurityConfig {
                         .tokenValiditySeconds(3600)          // 유효기간 초단위
                         .key("rememberMe!")                 // 키 - 암호화에 필요?
                         .userDetailsService(memberService)  // 로그인 할 때 쓰는 UserDetailService
-                        .authenticationSuccessHandler(successHandler)   // 로그인 성공 시 Handler
+                        .authenticationSuccessHandler(loginSuccessHandler)   // 로그인 성공 시 Handler
                         .useSecureCookie(false)             // ?
                 )
                 //동시 접속
