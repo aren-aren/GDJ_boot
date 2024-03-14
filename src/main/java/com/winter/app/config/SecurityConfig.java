@@ -32,7 +32,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity // (debug = true) 를 주면 로그들을 출력가능
 public class SecurityConfig {
 
     @Autowired

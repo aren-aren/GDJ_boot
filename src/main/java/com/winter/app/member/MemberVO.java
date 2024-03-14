@@ -45,6 +45,7 @@ public class MemberVO implements UserDetails, OAuth2User {
 
     //Naver, Kakao, Google
     private String social;
+    private String accessToken;
     private Map<String, Object> attributes;
 
     @Override
